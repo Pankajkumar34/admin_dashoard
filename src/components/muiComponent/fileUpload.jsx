@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -15,17 +16,41 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function InputFileUpload({handleFileUpload}) {
+export default function InputFileUpload({ handleFileUpload,editData }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  React.useEffect(() => {
+    if (editData && editData.image) {
+      setSelectedImage(`http://localhost:4000/img/${editData.image}`);
+    }
+  }, [editData]); 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    handleFileUpload(file);
+    const reader = new FileReader();
+    console.log(reader,"reder")
+    reader.onload = () => {
+      setSelectedImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <Button
-      component="label"
-      role={undefined}
-      variant="contained"
-      tabIndex={-1}
-      startIcon={<CloudUploadIcon />}
-    >
-      Upload file
-      <VisuallyHiddenInput type="file" onChange={(e)=>handleFileUpload(e.target.files[0])} />
-    </Button>
+    <div className='fileUpload'>
+      <Button
+        component="label"
+        role={undefined}
+        variant="contained"
+        tabIndex={-1}
+        startIcon={<CloudUploadIcon />}
+      >
+        Upload file
+        <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+      </Button>
+      {selectedImage ?(
+        <img src={selectedImage} alt="Uploaded" style={{ marginTop: '10px', maxWidth: '120px' ,display: 'inherit'}} />
+      ):<p> no image</p>
+      }
+    </div>
   );
 }

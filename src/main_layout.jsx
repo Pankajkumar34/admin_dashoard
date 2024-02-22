@@ -1,9 +1,19 @@
+import { useEffect } from "react";
 import SideBar from "./components/sidebar";
 import Topbar from "./components/topbar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation,useNavigate } from "react-router-dom";
+
 const Layout = () => {
   const location = useLocation();
+  const navigate=useNavigate()
   const checkPath = location.pathname !== "/";
+  useEffect(()=>{
+    const token= JSON.parse(localStorage.getItem('details'))?.Token
+    if( !token){
+      navigate('/signin')
+    }
+  
+  },[])
   return (
     <>
       <body

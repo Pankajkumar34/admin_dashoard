@@ -3,19 +3,25 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
 import { FormComponent } from "../bootstrapForm/form";
 import { useDispatch, useSelector } from "react-redux";
 import { postDataFalse } from "../../redux/dataSlice";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { fetchData } from "../../utils/thunkApi";
 
 export default function DataTable({ data, component ,inputData,handleClick}) {
   const dataAdd = useSelector((state) => state.mood.postData);
+const [editData,setEditData]= React.useState([])
+console.log(editData,"editData")
   const dispatch=useDispatch()
-  console.log(dataAdd,"dataAdd")
+// const navigate=useNavigate()
   const [formToggle, setFormToggle] = React.useState(false);
   const columns = [
-    { field: "id", headerName: "ID", width: 200 },
+    { field: "id", headerName: "ID", width: 200 ,hideable: true},
+    { field: "length", headerName: "length", width: 200 },
     { field: "title", headerName: "Title", flex: 1 },
     {
       field: "image",
@@ -33,27 +39,8 @@ export default function DataTable({ data, component ,inputData,handleClick}) {
           <p>no data</p>
         ),
     },
-    // {
-    //   field: "add",
-    //   headerName: "Add",
-    //   type: "string",
-    //   width: 90,
-    //   renderCell: (params) => (
-    //     <div>
-    //       <IconButton
-    //         aria-label="Add"
-    //         onClick={(e) => {
-    //           e.stopPropagation();
-    //           // dispatch(postDataFalse("fasle"))
-    //           handleAdd(params.row.id);
-    //         }}
-    //         size="small"
-    //       >
-    //         <AddIcon />
-    //       </IconButton>
-    //     </div>
-    //   ),
-    // },
+ 
+ 
     {
       field: "remove",
       headerName: "Delete",
@@ -98,23 +85,49 @@ export default function DataTable({ data, component ,inputData,handleClick}) {
   const handleAdd = (e) => {
     e.stopPropagation();
     setFormToggle(true);
+    if(dataAdd===false){
+console.log("pp")
+    }
     dispatch(postDataFalse("fasle"))
   
   };
 
-  const handleEdit = (id) => {
-    console.log(id, "ppe");
+  const handleEdit = async(id) => {
+   
+  try {
+    const edit = await axios.get(`http://localhost:4000/api/getuniquedata/${id}`)
+    if(edit){
+      setEditData(edit.data.get_with_id)
+      setFormToggle(true)
+      dispatch(postDataFalse("false"))
+    }
+  } catch (error) {
+    console.log(error)
+  }
   };
 
-  const handleDelete = (id) => {
-    console.log(id, "ppd");
+  
+  const closeHandle=()=>{
+    setFormToggle(false)
+    setEditData(null)
+  }
+
+  const handleDelete =async (id) => {
+   try {
+    const del_data= await axios.delete(`http://localhost:4000/api/delete_mood/${id}`)
+    console.log(del_data,"del")
+    dispatch(fetchData());
+   } catch (error) {
+    
+   }
   };
   const rows = [];
   console.log(rows, "roe ");
   if (data) {
     for (let i = 0; i < data.length; i++) {
       rows.push({
-        id: data[i]._id,
+        id:data[i]._id,
+        length: i+1,
         title: data[i].Title,
         image: data[i].image,
       });
@@ -127,20 +140,22 @@ export default function DataTable({ data, component ,inputData,handleClick}) {
         <h1>mood</h1> 
         <div>
         
-        <Button variant="contained" color="success" background="red"  onClick={handleAdd}>
-       {formToggle?"close":" Add"}
-      </Button>
+       {
+        formToggle?<Button variant="contained" color="success" background="red"  onClick={closeHandle}>close</Button>:<Button variant="contained" color="success" background="red"  onClick={handleAdd}>Add</Button>
+  
+        
+       } 
         </div>
       </div>
-      {formToggle && dataAdd=== false? (
-        <FormComponent datafields={inputData} handleClick={handleClick} />
+      {formToggle && dataAdd=== false ? (
+        <FormComponent datafields={inputData} handleClick={handleClick} editData={editData} setFormToggle={setFormToggle}/>
       ) : (
         <DataGrid
           rows={rows}
           columns={columns}
-          components={{
-            Toolbar: GridToolbar, // optional, to show the toolbar
-          }}
+          // components={{
+          //   Toolbar: GridToolbar, // optional, to show the toolbar
+          // }}
           pageSize={5}
           checkboxSelection
         />

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchData, postData } from "../utils/thunkApi";
+import { postData, fetchData } from "../utils/thunkApi";
 
 const initialState = {
   data: [],
@@ -22,7 +22,7 @@ export const dataSlice = createSlice({
     },
     postDataFalse: (state, action) => {
       
-      state.postData = action.payload==="false" && false;
+      state.postData = action.payload==="false"  && false;
     },
   },
   extraReducers: (builder) => {
@@ -41,3 +41,22 @@ export const dataSlice = createSlice({
 });
 export const { addInputData,imageUpload,postDataFalse } = dataSlice.actions;
 export default dataSlice.reducer;
+
+
+// export const insertData = (data) => async (dispatch) => {
+//   try {
+//     // Perform the data insertion operation here
+//     // Example:
+//     // const response = await axios.post('your-insert-api-url', data);
+//     // Handle the response as needed
+
+//     // Dispatch the fetchData action to trigger the GET API request
+//     dispatch(fetchData());
+
+//     // Optionally, you can return the response if needed
+//     // return response;
+//   } catch (error) {
+//     // Handle errors
+//     console.error('Error inserting data:', error);
+//   }
+// };
