@@ -12,13 +12,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fetchData } from "../../utils/thunkApi";
 
-export default function DataTable({ data, component ,formToggle,setFormToggle,setEditData}) {
+export default function DataTable({ data, component ,inputData,handleClick}) {
   const dataAdd = useSelector((state) => state.mood.postData);
-// const [editData,setEditData]= React.useState([])
-
+const [editData,setEditData]= React.useState([])
+console.log(editData,"editData")
   const dispatch=useDispatch()
 // const navigate=useNavigate()
-  // const [formToggle, setFormToggle] = React.useState(false);
+  const [formToggle, setFormToggle] = React.useState(false);
   const columns = [
     { field: "id", headerName: "ID", width: 200 ,hideable: true},
     { field: "length", headerName: "length", width: 200 },
@@ -108,7 +108,10 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
   };
 
   
- 
+  const closeHandle=()=>{
+    setFormToggle(false)
+    setEditData(null)
+  }
 
   const handleDelete =async (id) => {
    try {
@@ -138,12 +141,14 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
         <h1>mood</h1> 
         <div>
         
-      
-    <Button variant="contained" color="success" background="red"  onClick={handleAdd}>Add</Button>
-       
+       {
+        formToggle && dataAdd===false?<Button variant="contained" color="success" background="red"  onClick={closeHandle}>close</Button>:<Button variant="contained" color="success" background="red"  onClick={handleAdd}>Add</Button>
+       } 
         </div>
       </div>
-    
+      {formToggle && dataAdd=== false ? (
+        <FormComponent datafields={inputData} handleClick={handleClick} editData={editData} setFormToggle={setFormToggle}/>
+      ) : (
         <DataGrid
           rows={rows}
           columns={columns}
@@ -153,7 +158,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
           pageSize={5}
           checkboxSelection
         />
-      
+      )}
     </div>
   );
 }

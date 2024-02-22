@@ -8,11 +8,13 @@ import {
 } from "../../redux/dataSlice";
 import { fetchData } from "../../utils/thunkApi";
 import axios from "axios";
+import { Button } from "@mui/material";
 const FormComponent = ({
   datafields,
   handleClick,
   editData,
   setFormToggle,
+  closeHandle
 }) => {
 
   const [imageFile, setImageFile] = useState();
@@ -65,7 +67,12 @@ const FormComponent = ({
   return (
     <>
       <form>
+        <div className="button_close my-2" style={{float:"right"}}>
+
+      <Button variant="contained" color="success" background="red"  onClick={closeHandle}>close</Button>
+        </div>
         <div className="form-group">
+
           {datafields?.map((item, index) => {
             console.log(item,"ppppperer")
             return (
