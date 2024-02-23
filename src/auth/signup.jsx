@@ -45,14 +45,15 @@ export default function SignUp() {
         alert("all fields required");
       } else {
         const postData = await axios.post(
-          "http://localhost:4000/api/create_user",
+          "https://motivation-backend-1.onrender.com/api/create_user",
           {
             email: data.get("email"),
             password: data.get("password"),
             name: data.get("name"),
           }
         );
-        if (postData.statusText === "OK") {
+        
+        if (postData.status === 200) {
           setLoader(true);
           setTimeout(() => {
             navigate("/signin");
@@ -64,7 +65,7 @@ export default function SignUp() {
     }
   };
 
-  console.log(AuthFields, "AuthFields");
+  
 
   const validateEmail = () => {
     return String(AuthFields.email)

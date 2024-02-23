@@ -17,7 +17,6 @@ export const dataSlice = createSlice({
       state.inputData = action.payload
     },
     imageUpload: (state, action) => {
-      console.log(action.payload,"action.payload")
       state.image = action.payload;
     },
     postDataFalse: (state, action) => {
@@ -34,7 +33,6 @@ export const dataSlice = createSlice({
 
     // Handle POST request success state
     builder.addCase(postData.fulfilled, (state, action) => {
-      console.log(action.payload, "post");
       state.postData=true
     });
   },
@@ -43,20 +41,3 @@ export const { addInputData,imageUpload,postDataFalse } = dataSlice.actions;
 export default dataSlice.reducer;
 
 
-// export const insertData = (data) => async (dispatch) => {
-//   try {
-//     // Perform the data insertion operation here
-//     // Example:
-//     // const response = await axios.post('your-insert-api-url', data);
-//     // Handle the response as needed
-
-//     // Dispatch the fetchData action to trigger the GET API request
-//     dispatch(fetchData());
-
-//     // Optionally, you can return the response if needed
-//     // return response;
-//   } catch (error) {
-//     // Handle errors
-//     console.error('Error inserting data:', error);
-//   }
-// };

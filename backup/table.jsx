@@ -15,7 +15,6 @@ import { fetchData } from "../../utils/thunkApi";
 export default function DataTable({ data, component ,inputData,handleClick}) {
   const dataAdd = useSelector((state) => state.mood.postData);
 const [editData,setEditData]= React.useState([])
-console.log(editData,"editData")
   const dispatch=useDispatch()
 // const navigate=useNavigate()
   const [formToggle, setFormToggle] = React.useState(false);

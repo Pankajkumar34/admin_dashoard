@@ -41,7 +41,7 @@ const FormComponent = ({
       formdata.append("Title", dataAdd?.Title);
       formdata.append("image", imageFile);
       const update = await axios.put(
-        `http://localhost:4000/api/mood_update/${editData._id}`,
+        `https://motivation-backend-1.onrender.com/api/mood_update/${editData._id}`,
         formdata
       );
       console.log(update, "update");
@@ -74,7 +74,7 @@ const FormComponent = ({
         <div className="form-group">
 
           {datafields?.map((item, index) => {
-            console.log(item,"ppppperer")
+           
             return (
               <React.Fragment key={index}>
                 {item.name === "image" ? (

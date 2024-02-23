@@ -32,7 +32,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
       renderCell: (params) =>
         params.value ? (
           <img
-            src={"http://localhost:4000/img/" + `${params.value}`}
+            src={"https://motivation-backend-1.onrender.com/img/" + `${params.value}`}
             alt="Image"
             style={{ width: "98px", borderRadius: "37px", height: "86px" }}
           />
@@ -97,7 +97,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
   const handleEdit = async(id) => {
    
   try {
-    const edit = await axios.put(`http://localhost:4000/api/mood_edit/${id}`)
+    const edit = await axios.put(`https://motivation-backend-1.onrender.com/api/mood_edit/${id}`)
     if(edit){
       setEditData(edit.data.get_with_id)
       setFormToggle(true)
@@ -113,7 +113,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
 
   const handleDelete =async (id) => {
    try {
-    const del_data= await axios.delete(`http://localhost:4000/api/delete_mood/${id}`)
+    const del_data= await axios.delete(`https://motivation-backend-1.onrender.com/api/delete_mood/${id}`)
     console.log(del_data,"del")
     dispatch(fetchData());
    } catch (error) {
@@ -121,7 +121,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
    }
   };
   const rows = [];
-  console.log(rows, "roe ");
+
   if (data) {
     for (let i = 0; i < data.length; i++) {
       rows.push({

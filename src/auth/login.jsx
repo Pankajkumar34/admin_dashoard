@@ -26,12 +26,12 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const postData = await axios.post("http://localhost:4000/api/login", {
+      const postData = await axios.post("https://motivation-backend-1.onrender.com/api/login", {
         email: data.get("email"),
         password: data.get("password"),
       });
-      console.log(postData.data, "postData");
-      if (postData.statusText === "OK") {
+      console.log(postData, "postData");
+      if (postData.status === 200) {
         setShowModal(true);
         const details = postData.data;
         localStorage.setItem("details", JSON.stringify(details));

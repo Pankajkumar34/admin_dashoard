@@ -21,14 +21,14 @@ export default function InputFileUpload({ handleFileUpload,editData }) {
 
   React.useEffect(() => {
     if (editData && editData.image) {
-      setSelectedImage(`http://localhost:4000/img/${editData.image}`);
+      setSelectedImage(`https://motivation-backend-1.onrender.com/img/${editData.image}`);
     }
   }, [editData]); 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     handleFileUpload(file);
     const reader = new FileReader();
-    console.log(reader,"reder")
+
     reader.onload = () => {
       setSelectedImage(reader.result);
     };

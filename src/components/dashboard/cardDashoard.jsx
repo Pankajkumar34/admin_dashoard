@@ -15,7 +15,7 @@ function TabsBasic() {
 
     React.useEffect(() => {
         dispatch(fetchData());
-      }, [data]);
+      }, []);
   return (
     <Tabs aria-label="Basic tabs" defaultValue={0}>
       <TabList>
@@ -41,7 +41,7 @@ const CardDashboard=()=>{
     const data = useSelector((state) => state.mood.data);
     React.useEffect(() => {
         dispatch(fetchData());
-      }, [data]);
+      }, []);
     return(
         <>
         <TabsBasic/>

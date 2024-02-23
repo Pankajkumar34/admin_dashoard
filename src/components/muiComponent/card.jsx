@@ -11,12 +11,12 @@ export default function BasicCard({moodData}) {
 
   return (
   
-  <div className='row'>
+  <div className='row' >
    {
     moodData.length>0 && moodData?.map((item)=>{
         
         return(
-          <div className='col-lg-4 col-md-12 mb-4 mb-lg-0 my-2'>
+          <div className='col-lg-4 col-md-12 mb-4 mb-lg-0 my-2' key={item._id}>
 
          
           <Card sx={{ width: 320 }} >
@@ -34,7 +34,7 @@ export default function BasicCard({moodData}) {
           </div>
           <AspectRatio minHeight="120px" maxHeight="200px">
             <img
-            src={"http://localhost:4000/img/" + `${item.image}`}
+            src={"https://motivation-backend-1.onrender.com/img/" + `${item.image}`}
              
               loading="lazy"
               alt=""
