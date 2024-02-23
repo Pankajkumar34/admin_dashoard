@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import SideBar from "./components/sidebar";
 import Topbar from "./components/topbar";
 import { Outlet, useLocation,useNavigate } from "react-router-dom";
+import BasicCard from "./components/muiComponent/card";
+import CardDashboard from "./components/dashboard/cardDashoard";
 
 const Layout = () => {
   const location = useLocation();
@@ -38,7 +40,7 @@ const Layout = () => {
         <div class="app-content content ">
           <div class="content-overlay"></div>
           <div class="header-navbar-shadow"></div>
-          {checkPath ? <Outlet /> : "no data"}
+          {checkPath ? <Outlet /> : <CardDashboard/>}
         </div>
         {/* <!-- END: Content--> */}
 

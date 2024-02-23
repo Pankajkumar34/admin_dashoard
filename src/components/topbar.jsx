@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 
-const Topbar=()=>{
+const   Topbar=()=>{
     const navigate = useNavigate()
     const Logout=()=>{
         alert("pp")
@@ -169,7 +169,7 @@ const Topbar=()=>{
                                 <h6 class="fw-bolder me-auto mb-0">System Notifications</h6>
                                 <div class="form-check form-check-primary form-switch">
                                     <input class="form-check-input" id="systemNotification" type="checkbox" checked=""/>
-                                    <label class="form-check-label" for="systemNotification"></label>
+                                    <label class="form-check-label" htmlFor="systemNotification"></label>
                                 </div>
                             </div><a class="d-flex" href="#">
                                 <div class="list-item d-flex align-items-start">

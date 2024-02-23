@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import axios from "./axios.config";
+
 const API_endpoint = process.env.REACT_APP_API_ENDPOINT;
 
 export const postData = createAsyncThunk(
@@ -22,7 +22,7 @@ export const postData = createAsyncThunk(
 
 export const fetchData = createAsyncThunk("fetch/mood_data", async () => {
   try {
-    const response = await axios.get(API_endpoint + "get_mood_data");
+    const response = await axios.get("get_mood_data");
    
     return response.data.get_data;
   } catch (error) {

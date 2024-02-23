@@ -53,7 +53,7 @@ const Mood = () => {
 
   useEffect(() => {
     dispatch(fetchData());
-  }, []);
+  }, [dataAdd]);
   return (
     <>
       {formToggle && dataAdd === false ? (

@@ -61,7 +61,7 @@ const SideBar = () => {
             data-menu="menu-navigation"
           >
             <li class=" nav-item">
-              <a class="d-flex align-items-center" href="index.html">
+              <Link class="d-flex align-items-center" to="/">
                 <i data-feather="home"></i>
                 <span class="menu-title text-truncate" data-i18n="Dashboards">
                   Dashboards
@@ -69,7 +69,7 @@ const SideBar = () => {
                 <span class="badge badge-light-warning rounded-pill ms-auto me-1">
                   2
                 </span>
-              </a>
+              </Link>
          
             </li>
             <li class=" navigation-header">

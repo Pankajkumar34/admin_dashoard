@@ -20,7 +20,8 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
 // const navigate=useNavigate()
   // const [formToggle, setFormToggle] = React.useState(false);
   const columns = [
-    { field: "id", headerName: "ID", width: 200 ,hideable: true},
+    { field: "id", headerName: "ID", width: 200 , hideable: true,
+    checkboxSelection: false},
     { field: "length", headerName: "length", width: 200 },
     { field: "title", headerName: "Title", flex: 1 },
     {
@@ -33,7 +34,7 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
           <img
             src={"http://localhost:4000/img/" + `${params.value}`}
             alt="Image"
-            style={{ width: "117pxpx", borderRadius: "25px", height: "80px" }}
+            style={{ width: "98px", borderRadius: "37px", height: "86px" }}
           />
         ) : (
           <p>no data</p>
@@ -143,17 +144,18 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
        
         </div>
       </div>
-    
+      <div style={{ height: '500px', width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          // components={{
-          //   Toolbar: GridToolbar, // optional, to show the toolbar
-          // }}
+          slots={{
+            toolbar: GridToolbar,
+          }}
+          rowHeight={100}
           pageSize={5}
           checkboxSelection
         />
-      
+      </div>
     </div>
   );
 }
