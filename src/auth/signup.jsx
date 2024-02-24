@@ -6,7 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
+import getAxiosInstance from "../utils/axios.config";
 import imgbg from "../assets/img/3409297.jpg";
 import { useLottie } from "lottie-react";
 import animation from "../lottie/Animation - 1708583156388.json";
@@ -44,8 +44,8 @@ export default function SignUp() {
       if (!(AuthFields.email, AuthFields.name, AuthFields.password)) {
         alert("all fields required");
       } else {
-        const postData = await axios.post(
-          "https://motivation-backend-1.onrender.com/api/create_user",
+        const postData = await getAxiosInstance().post(
+          "create_user",
           {
             email: data.get("email"),
             password: data.get("password"),

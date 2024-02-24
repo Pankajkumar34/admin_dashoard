@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
 const SideBar = () => {
     const sideMenus=[
         {
@@ -61,7 +62,7 @@ const SideBar = () => {
             data-menu="menu-navigation"
           >
             <li class=" nav-item">
-              <Link class="d-flex align-items-center" to="/">
+              <Link class="d-flex align-items-center" to="/" >
                 <i data-feather="home"></i>
                 <span class="menu-title text-truncate" data-i18n="Dashboards">
                   Dashboards
@@ -77,14 +78,12 @@ const SideBar = () => {
               <i data-feather="more-horizontal"></i>
             </li>
             {
-                sideMenus.map((menu)=>{
+                sideMenus?.map((menu)=>{
                     return(
                         <li class=" nav-item" key={menu.id}>
-                        <Link class="d-flex align-items-center" to={`${menu.path}`}>
+                        <Link class="d-flex align-items-center" to={`${menu?.path}`}>
                           <i data-feather="mail"></i>
-                          <span class="menu-title text-truncate" data-i18n="Email">
-                            {menu.menu}
-                          </span>
+                         {menu.menu}
                         </Link>
                       </li>
                     )

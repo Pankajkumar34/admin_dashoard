@@ -2,20 +2,28 @@ import { useEffect } from "react";
 import SideBar from "./components/sidebar";
 import Topbar from "./components/topbar";
 import { Outlet, useLocation,useNavigate } from "react-router-dom";
-import BasicCard from "./components/muiComponent/card";
+
 import CardDashboard from "./components/dashboard/cardDashoard";
+import { fetchData } from "./utils/thunkApi";
+import { useDispatch } from "react-redux";
 
 const Layout = () => {
   const location = useLocation();
+
   const navigate=useNavigate()
   const checkPath = location.pathname !== "/";
   useEffect(()=>{
+    
     const token= JSON.parse(localStorage.getItem('details'))?.Token
     if( !token){
       navigate('/signin')
     }
-  
+
+ 
   },[])
+  // useEffect(()=>{
+
+  // },)
   return (
     <>
       <body

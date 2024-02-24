@@ -8,13 +8,16 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
+import getAxiosInstance from "../utils/axios.config";
 import { useLottie } from "lottie-react";
 import { json, useNavigate } from "react-router-dom";
 import imgbg from "../assets/img/3409297.jpg";
 import { Alert, Modal } from "@mui/material";
 import animation from "../lottie/Animation - 1708583156388.json";
+import { fetchData } from "../utils/thunkApi";
+import { useDispatch } from "react-redux";
 export default function SignIn() {
+  const dispatch = useDispatch();
   const options = {
     animationData: animation,
     loop: true,
@@ -22,20 +25,27 @@ export default function SignIn() {
   const { View } = useLottie(options);
   const [showModal, setShowModal] = useState(false);
   const navigation = useNavigate();
+
+  // Dispatch fetchData after successful login
+  const handleLoginSuccess = (details) => {
+    localStorage.setItem("details", JSON.stringify(details));
+    dispatch(fetchData());
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const postData = await axios.post("https://motivation-backend-1.onrender.com/api/login", {
+      const postData = await getAxiosInstance().post("login", {
         email: data.get("email"),
         password: data.get("password"),
       });
+     
       console.log(postData, "postData");
       if (postData.status === 200) {
         setShowModal(true);
-        const details = postData.data;
-        localStorage.setItem("details", JSON.stringify(details));
-
+        const details = postData?.data;
+        handleLoginSuccess(details);
         setTimeout(() => {
           navigation("/");
         }, 1000);
@@ -44,6 +54,16 @@ export default function SignIn() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    // Check if user is already logged in (e.g., after page refresh)
+    const details = JSON.parse(localStorage.getItem("details"));
+    if (details?.Token) {
+      dispatch(fetchData());
+    }else{
+      console.log("not token")
+    }
+  }, []);
 
   return (
     <div

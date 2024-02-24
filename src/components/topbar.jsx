@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom"
 const   Topbar=()=>{
     const navigate = useNavigate()
     const Logout=()=>{
-        alert("pp")
         localStorage.removeItem('details')
         navigate('/signin')
     }

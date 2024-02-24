@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "./axios.config";
+
+import getAxiosInstance from "./axios.config";
+
 
 const API_endpoint = process.env.REACT_APP_API_ENDPOINT;
 
@@ -10,7 +12,7 @@ export const postData = createAsyncThunk(
         formdata.append('Title', concatenatedData.Title);
         formdata.append('image', concatenatedData.image.image);
       try {
-        const response = await axios.post(API_endpoint + "create_mood",formdata);
+        const response = await getAxiosInstance().post( `create_mood`,formdata);
         console.log(response,"response")
         dispatch(fetchData());
         return response.data
@@ -20,9 +22,11 @@ export const postData = createAsyncThunk(
     }
 )
 
-export const fetchData = createAsyncThunk("fetch/mood_data", async () => {
+export const fetchData = createAsyncThunk("fetch/mood_data", async (  ) => {
+ 
   try {
-    const response = await axios.get("get_mood_data");
+
+    const response = await getAxiosInstance().get("get_mood_data");
    
     return response.data.get_data;
   } catch (error) {
