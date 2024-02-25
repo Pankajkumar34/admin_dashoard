@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import axios from "axios";
 import { FormComponent } from "../bootstrapForm/form";
+import { Toastify } from "../../erreorToast/toastify";
 const Mood = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const Mood = () => {
   }, [dataAdd]);
   return (
     <>
+       <Toastify/>
       {formToggle && dataAdd === false ? (
         <FormComponent
           datafields={inputData}
@@ -75,6 +77,8 @@ const Mood = () => {
           setEditData={setEditData}
         />
       )}
+
+   
     </>
   );
 };

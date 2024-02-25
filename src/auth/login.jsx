@@ -16,6 +16,34 @@ import { Alert, Modal } from "@mui/material";
 import animation from "../lottie/Animation - 1708583156388.json";
 import { fetchData } from "../utils/thunkApi";
 import { useDispatch } from "react-redux";
+import { Toastify } from "../erreorToast/toastify";
+import { toast } from 'react-toastify';
+
+export const notify = (msg, type = 'success') => {
+  let options = {
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  };
+
+  switch (type) {
+    case 'success':
+      toast.success(msg, options);
+      break;
+    case 'error':
+      toast.error(msg, options);
+      break;
+    case 'info':
+      toast.info(msg, options);
+      break;
+    default:
+      toast(msg, options);
+  }
+};
+
 export default function SignIn() {
   const dispatch = useDispatch();
   const options = {
@@ -36,31 +64,68 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
+      if (!data.get("email") || !data.get("password")) {
+        notify("Please fill in all fields.", 'error'); // Notify for blank fields
+        return;
+      }
+  
       const postData = await getAxiosInstance().post("login", {
         email: data.get("email"),
         password: data.get("password"),
       });
-     
+  
       console.log(postData, "postData");
       if (postData.status === 200) {
         setShowModal(true);
+        notify(postData?.data?.msg);
         const details = postData?.data;
         handleLoginSuccess(details);
         setTimeout(() => {
           navigation("/");
-        }, 1000);
+        }, 2000);
+      } else {
+        notify(postData?.data, 'error'); // Notify for other errors
       }
     } catch (error) {
       console.log(error);
+      notify("Error occurred. Please try again.", 'error'); // Notify for generic errors
     }
   };
+  
+  
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   try {
+  //     const postData = await getAxiosInstance().post("login", {
+  //       email: data.get("email"),
+  //       password: data.get("password"),
+  //     });
+
+  //     console.log(postData, "postData");
+  //     if (postData.status === 200) {
+  //       setShowModal(true);
+  //       notify(postData?.data?.msg);
+  //       const details = postData?.data;
+  //       handleLoginSuccess(details);
+  //       setTimeout(() => {
+  //         navigation("/");
+  //       }, 2000);
+  //     }else{
+  //       notify(postData?.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //     notify(error.data);
+  //   }
+  // };
 
   useEffect(() => {
     // Check if user is already logged in (e.g., after page refresh)
     const details = JSON.parse(localStorage.getItem("details"));
     if (details?.Token) {
       dispatch(fetchData());
-    }else{
+    } else {
       console.log("not token")
     }
   }, []);
@@ -78,9 +143,9 @@ export default function SignIn() {
       <div>{View}</div>
 
       <Container component="main" maxWidth="sm">
-        {showModal === true && (
-          <Alert severity="success">This is a success Alert.</Alert>
-        )}
+       
+          <Toastify />
+        
         <Box
           sx={{
             boxShadow: 3,

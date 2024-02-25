@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fetchData } from "../../utils/thunkApi";
+import { Toastify } from "../../erreorToast/toastify";
 
 export default function DataTable({ data, component ,formToggle,setFormToggle,setEditData}) {
   const dataAdd = useSelector((state) => state.mood.postData);
@@ -85,11 +86,9 @@ export default function DataTable({ data, component ,formToggle,setFormToggle,se
   ];
   const handleAdd = (e) => {
     e.stopPropagation();
-    setFormToggle(true);
-    // setEditData(null)
-    // if(dataAdd===false){
 
-    // }
+    setFormToggle(true);
+
     dispatch(postDataFalse("fasle"))
   
   };

@@ -1,6 +1,7 @@
 
 
 import axios from "axios";
+import { Toastify } from "../erreorToast/toastify";
 
 const baseUrl = "https://motivation-backend-1.onrender.com/api/";
 
